@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,6 @@ Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/logout', [UserController::class, 'logout']);
 
-Route::get('/create-post', function () {
-    return view('create-post');
-});
+Route::get('/create-post', [PostController::class, 'createPost']);
+Route::post('/create-post', [PostController::class, 'store']);
+Route::get('/post/{post}', [PostController::class, 'viewSinglePost']);
