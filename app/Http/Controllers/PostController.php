@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
     //
     public function viewSinglePost(Post $post)
     {
+        $post['content'] = Str::markdown($post->content);
         return view('single-post', ['post' => $post]);
     }
 
@@ -30,6 +32,6 @@ class PostController extends Controller
 
         $post = Post::create($postFormData);
 
-        return redirect("/post/{$post->id}")->with('success', "Post Creation Successful");
+        return redirect("/post/{$post->id}")->with('success', "Post Creation Successful.");
     }
 }
