@@ -28,8 +28,8 @@ class PostController extends Controller
         $postFormData['content'] = strip_tags($postFormData['content']);
         $postFormData['user_id'] = auth()->id();
 
-        Post::create($postFormData);
+        $post = Post::create($postFormData);
 
-        return redirect('/create-post')->with('success', 'Post Created Successfully');
+        return redirect("/post/{$post->id}")->with('success', "Post Creation Successful");
     }
 }
