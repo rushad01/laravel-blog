@@ -9,6 +9,15 @@ use Illuminate\Support\Str;
 class PostController extends Controller
 {
     //
+    public function delete(Request $request, Post $post)
+    {
+        if ($request->user()->cannot('delete', $post)) {
+            return "You don't have permission for deleting this post post.";
+        }
+        $post->delete();
+        //dd(auth()->user()->username);
+        return redirect('/profile/' . auth()->user()->username)->with('success', "Successfully deleted the post.");
+    }
     public function viewSinglePost(Post $post)
     {
         $post['content'] = Str::markdown($post->content);
