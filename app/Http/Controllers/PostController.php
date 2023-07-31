@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -42,5 +43,20 @@ class PostController extends Controller
         $post = Post::create($postFormData);
 
         return redirect("/post/{$post->id}")->with('success', "Post Creation Successful.");
+    }
+    public function editPost(Post $post)
+    {
+        return view('edit-post', compact('post'));
+    }
+
+    public function updatePost(Post $post, Request $request)
+    {
+        $postUpdateFormData = $request->validate([
+            'title' => 'required',
+            'content' => 'required'
+        ]);
+        //dd($postUpdateFormData);
+        $post->update($postUpdateFormData);
+        return redirect('/profile/' . auth()->user()->username)->with('success', 'Post Updated Successfully');
     }
 }
