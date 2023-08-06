@@ -1,6 +1,6 @@
 <x-layout>
     <div class="container py-md-5 container--narrow">
-      <form action="/{{$post->id}}/update-post" method="POST">
+      <form action="/{{$post->id}}/update_post" method="POST">
         @csrf
         @method('patch')
         <div class="form-group">

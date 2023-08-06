@@ -61,6 +61,7 @@ class UserController extends Controller
     {
         $posts = $user->posts()->get();
         $postsCount = $posts->count();
-        return view('profile-post', compact('posts', 'postsCount'));
+        $username = $user->username;
+        return view('profile-post', compact('posts', 'postsCount', 'username'));
     }
 }
