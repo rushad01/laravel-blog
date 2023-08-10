@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Follower;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -62,6 +63,12 @@ class UserController extends Controller
         $posts = $user->posts()->get();
         $postsCount = $posts->count();
         $username = $user->username;
-        return view('profile-post', compact('posts', 'postsCount', 'username'));
+
+        $currentlyFollowing = 0;
+        if (auth()->check()) {
+            $currentlyFollowing = Follower::where([['user_id', '=', auth()->user()->id], ['followedUser', '=', $user->id]])->count();
+        }
+
+        return view('profile-post', compact('posts', 'postsCount', 'username', 'currentlyFollowing'));
     }
 }
