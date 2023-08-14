@@ -33,3 +33,8 @@ Route::delete('/delete/{post}', [PostController::class, 'delete']);
 
 
 Route::get('/profile/{user:username}', [UserController::class, 'profile']);
+
+//chating feature
+Route::get('/chat', function () {
+    return view('blog-chat');
+});
