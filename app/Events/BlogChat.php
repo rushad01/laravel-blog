@@ -7,21 +7,22 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class BlogChat implements ShouldBroadcast
+class BlogChat implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $message;
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct($message)
     {
-        //
+        $this->message = $message;
     }
-
     /**
      * Get the channels the event should broadcast on.
      *
@@ -30,7 +31,7 @@ class BlogChat implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('blog-chat'),
+            new Channel('blog-chat'),
         ];
     }
 }
