@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
@@ -22,7 +23,7 @@ Route::post('/login', [UserController::class, 'login'])->middleware('guest');
 Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 //Follower adding 
 Route::post('/new_follow/{user:username}', [FollowerController::class, 'newFollow'])->middleware('auth');
-Route::post('/remove_follow/{user:username}', [FollowerController::class, 'removeFollow']);
+Route::post('/remove_follow/{user:username}', [FollowerController::class, 'removeFollow'])->middleware('auth');
 
 Route::get('/create_post', [PostController::class, 'createPost'])->middleware('auth');
 Route::post('/create_post', [PostController::class, 'store'])->middleware('auth');
@@ -35,6 +36,5 @@ Route::delete('/delete/{post}', [PostController::class, 'delete']);
 Route::get('/profile/{user:username}', [UserController::class, 'profile']);
 
 //chating feature
-Route::get('/chat', function () {
-    return view('blog-chat');
-});
+Route::get('/chat', [ChatController::class, 'chatView'])->middleware('auth');
+Route::post('/chat', [ChatController::class, 'newChat'])->middleware('auth');

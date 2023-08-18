@@ -16,12 +16,14 @@ class BlogChat implements ShouldBroadcastNow
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $message;
+    public $username;
     /**
      * Create a new event instance.
      */
-    public function __construct($message)
+    public function __construct($username, $message)
     {
         $this->message = $message;
+        $this->username = $username;
     }
     /**
      * Get the channels the event should broadcast on.
